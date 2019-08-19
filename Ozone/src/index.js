@@ -166,21 +166,39 @@ function actionPage() {
     // End поиск
 
 
-    function filter() {
-        cards.forEach((card) => {
-            const cardPrice = card.querySelector('.card-price');
-            const price = parseFloat(cardPrice.textContent);
-            const discount = card.querySelector('.card-sale');
-            if ((min.value && price < min.value) || (max.value && price > max.value)) {
-                card.parentNode.style.display = 'none';
-            } else if (discountCheckbox.checked && !discount) {
-                card.parentNode.style.display = 'none';
-            } else {
-                card.parentNode.style.display = '';
-            }
-        });
-    }
 
+
+}
+
+function filter() {
+    const cards = document.querySelectorAll('.goods .card');
+    const discountCheckbox = document.getElementById('discount-checkbox');
+
+    const min = document.getElementById('min');
+    const max = document.getElementById('max');
+
+    const activeLi = document.querySelector('.catalog-list .active');
+
+    const search = document.querySelector('.search-wrapper_input');
+    const searchBtn = document.querySelector('.search-btn');
+
+    cards.forEach((card) => {
+        const cardPrice = card.querySelector('.card-price');
+        const price = parseFloat(cardPrice.textContent);
+        const discount = card.querySelector('.card-sale');
+        if ((min.value && price < min.value) || (max.value && price > max.value)) {
+            card.parentNode.style.display = 'none';
+        } else if (discountCheckbox.checked && !discount) {
+            card.parentNode.style.display = 'none';
+        } else if(activeLi) {
+            if(card.dataset.category !== activeLi.textContent){
+                card.parentNode.style.display = 'none';
+            }
+           
+        }else {
+            card.parentNode.style.display = '';
+        }
+    });
 }
 
 //End Фильтр
@@ -237,7 +255,7 @@ function renderCards(data) {
 // End Получение данных с сервера
 
 
-function renderCatalog(){
+function renderCatalog() {
     const cards = document.querySelectorAll('.goods .card');
     const catalogList = document.querySelector('.catalog-list');
     const catalogBtn = document.querySelector('.catalog-button');
@@ -254,25 +272,36 @@ function renderCatalog(){
         catalogList.appendChild(li);
     });
 
+    const allLi = catalogList.querySelectorAll('li');
+
     catalogBtn.addEventListener('click', (event) => {
-        
-        if(catalogWrapper.style.display){
+
+        if (catalogWrapper.style.display) {
             catalogWrapper.style.display = "";
         } else {
             catalogWrapper.style.display = "block";
         }
 
-        if(event.target.tagName === 'LI'){
+        if (event.target.tagName === 'LI') {
             cards.forEach((card) => {
-                if(card.dataset.category !== event.target.textContent) {
+                if (card.dataset.category !== event.target.textContent) {
                     card.parentNode.style.display = 'none';
                 } else {
                     card.parentNode.style.display = '';
                 }
 
             });
-        }
-        
+
+            allLi.forEach((elem) => {
+                if (elem === event.target) {
+                    elem.classList.add('active');
+                } else {
+                    elem.classList.remove('active');
+                }
+            });
+        } 
+
+        filter();
     });
 
 
@@ -284,9 +313,10 @@ function renderCatalog(){
 
 getData().then((data) => {
     renderCards(data);
+    renderCatalog();
     toggleCheckbox();
     toggleCart();
     addCart();
     actionPage();
-    renderCatalog();
+    //renderCatalog();
 });
