@@ -1,16 +1,13 @@
-function toggleCart() {
-    const cartBtn = document.querySelector('#cart');
-    const cartCloseBtn = document.querySelector('.cart-close');
-    const counter = document.querySelector('.counter');
-    const cart = document.querySelector('.cart');
+export default function toggleCheckbox() {
+    const checkbox = document.querySelectorAll(".filter-check_checkbox");
 
-    cartBtn.addEventListener('click', () => {
-        cart.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    });
-
-    cartCloseBtn.addEventListener('click', () => {
-        cart.style.display = 'none';
-        document.body.style.overflow = '';
+    checkbox.forEach(function (elem) {
+        elem.addEventListener('change', function () {
+            if (elem.checked) {
+                elem.nextElementSibling.classList.add('checked');
+            } else {
+                elem.nextElementSibling.classList.remove('checked');
+            }
+        });
     });
 }

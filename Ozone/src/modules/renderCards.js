@@ -1,4 +1,4 @@
-function renderCards(data) {
+export default function renderCards(data) {
     const goodsWraper = document.querySelector('.goods');
     data.goods.forEach((good) => {
         const card = document.createElement('div');

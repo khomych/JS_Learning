@@ -1,4 +1,4 @@
-function filter() {
+export default function filter() {
     const cards = document.querySelectorAll('.goods .card');
     const discountCheckbox = document.getElementById('discount-checkbox');
 

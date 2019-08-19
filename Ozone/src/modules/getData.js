@@ -1,4 +1,4 @@
-function getData() {
+export default function getData() {
     const goodsWraper = document.querySelector('.goods');
 
     return fetch('./db/db.json').then((response) => {

@@ -1,4 +1,4 @@
-function addCart() {
+export default function addCart() {
     const cards = document.querySelectorAll('.goods .card');
     const cartWrapper = document.querySelector('.cart-wrapper');
     const cartEmpty = cartWrapper.querySelector('#cart-empty');

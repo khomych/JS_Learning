@@ -1,4 +1,6 @@
-function actionPage() {
+import filter from './filter.js';
+
+export default function actionPage() {
 
     const cards = document.querySelectorAll('.goods .card');
     const discountCheckbox = document.getElementById('discount-checkbox');
